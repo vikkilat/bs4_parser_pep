@@ -14,7 +14,7 @@
 
 ## Как запустить проект:
 
-* Клонировать репозиторий и перейти в него в командной строке:
+* Клонировать репозиторий:
 
 ```
 git clone git@github.com:vikkilat/bs4_parser_pep.git
@@ -27,7 +27,7 @@ python -m venv venv
 ```
 
 ```
-venv/scripts/activate
+source venv/Scripts/activate
 ```
 
 * Установить зависимости из файла ```requirements.txt```:
