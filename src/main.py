@@ -114,8 +114,12 @@ def pep(session):
         for tag in main_card_dl_tag:
             if tag.name == 'dt' and tag.text == 'Status:':
                 card_status = tag.next_sibling.next_sibling.string
-                count_status_in_card[card_status] = count_status_in_card.get(
-                    card_status, 0) + 1
+                try:
+                    count_status_in_card[card_status] += 1
+                except KeyError:
+                    logging.error(
+                        f'Указан несуществующий статус: {card_status}'
+                    )
                 if len(tr_tags[i].td.text) != 1:
                     table_status = tr_tags[i].td.text[1:]
                     if card_status[0] != table_status:
@@ -127,9 +131,8 @@ def pep(session):
                             f'Ожидаемые статусы: '
                             f'{EXPECTED_STATUS[table_status]}\n'
                                 )
-    for key in count_status_in_card:
-        result.append((key, str(count_status_in_card[key])))
-    result.append(('Total', len(tr_tags)-1))
+    result.extend(list(count_status_in_card.items()))
+    result.extend([('Total', len(tr_tags)-1)])
     return result
 
 
